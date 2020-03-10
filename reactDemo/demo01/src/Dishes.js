@@ -1,13 +1,15 @@
 import React, { Component, Fragment} from 'react';
 import axios from 'axios';
 import DishList from './DishList';
-import './style.css'
+import CssTest from './CssTest';
+import './style.css';
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 class Dishes extends Component{
     constructor(props){
         super(props);
         this.state = {
             inputVal: 'hxx',
-            list: []
+            list: ['精油推背', '精油胸推']
         };
         this.delItem = this.delItem.bind(this);
     }
@@ -56,27 +58,39 @@ class Dishes extends Component{
                     <button onClick={this.addList.bind(this)}>添加服务</button>
                 </div>
                 <ul ref={(ul)=>(this.ul=ul)}>
-                    {
-                        this.state.list.map((item, index)=>{
-                            return (
-                                // <li onClick={this.delItem.bind(this, index)}
-                                //     key={index + item}
-                                //     // dangerouslySetInnerHTML={{__html:item}}
-                                // >
-                                //     {item}
-                                // </li>
-                                <DishList 
-                                    key={item+index}
-                                    content={item} 
-                                    index={index}
-                                    delItem={this.delItem}
-                                />
-                            )
-                        })
-                    }
+                    <TransitionGroup>
+                        {
+                            this.state.list.map((item, index)=>{
+                                return (
+                                    // <li onClick={this.delItem.bind(this, index)}
+                                    //     key={index + item}
+                                    //     // dangerouslySetInnerHTML={{__html:item}}
+                                    // >
+                                    //     {item}
+                                    // </li>
+                                    <CSSTransition
+                                        timeout={2000}
+                                        classNames="css-test"
+                                        unmountOnEixt
+                                        appear={true}
+                                        key={item+index}
+                                    >
+                                        <DishList 
+                                            key={item+index}
+                                            content={item} 
+                                            index={index}
+                                            delItem={this.delItem}
+                                        />
+                                    </CSSTransition>
+                                )
+                            })
+                        }
+                    </TransitionGroup>
+                    
                     {/* <li>洗脚</li>
                     <li>精油推背</li> */}
                 </ul>
+                <CssTest />
             </Fragment>
         )
     }
