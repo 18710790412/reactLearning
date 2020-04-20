@@ -1,23 +1,27 @@
 import React, { useReducer } from 'react';
 
-function ReducerDemo(){
-    const [count, dispatch] = useReducer((state, action)=>{
-        console.log(state);
-        console.log(action)
-        switch(action){
+const ReducerDemo = (props) => {
+    const initData = {
+        count: 0
+    };
+    const reducer = (state, action)=>{
+        switch(action.type){
             case 'add':
-                return state + 1;
+                console.log(state)
+                console.log(action)
+                return { ...state, count: state.count + action.aaa };
             case 'reduce':
-                return state -1;
+                return { ...state, count: state.count - action.payload };
             default:
                 return state;
         }
-    },0)
+    };
+    const [state, dispatch] = useReducer(reducer, initData);
     return (
         <div>
-            <p>现在的分数时{count}</p>
-            <button onClick={()=>{dispatch('add')}}>Increase</button>
-            <button onClick={()=>{dispatch('reduce')}}>Decrease</button>
+            <p>现在的分数时{state.count}</p>
+            <button onClick={()=>{dispatch({type: 'add', aaa: 1})}}>Increase</button>
+            <button onClick={()=>{dispatch({type: 'reduce', payload: 1})}}>Decrease</button>
         </div>
     )
 }

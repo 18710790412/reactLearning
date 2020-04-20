@@ -21,6 +21,20 @@ function useWinSize(){
 }
 function HooksDemo(){
     const size = useWinSize();
+    let aaa={
+        a: 1,
+        b: 2,
+        c: 3,
+        d: 4,
+    };
+    let {
+        a,
+        c,
+        d
+    } = aaa;
+    console.log(a)
+    console.log(c)
+    console.log(d)
     return (
         <>
             <div>页面的size:{size.width}---{size.height}</div>
